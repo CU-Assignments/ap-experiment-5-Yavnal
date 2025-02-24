@@ -1,0 +1,45 @@
+public class LongestIncreasingSubsequence {
+
+    public static int lengthOfLIS(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+
+        // Create an array to store the length of the longest subsequence up to each index
+        int[] dp = new int[nums.length];
+        
+        // Initialize dp array, each index will at least have the subsequence of length 1
+        for (int i = 0; i < dp.length; i++) {
+            dp[i] = 1;
+        }
+
+        // Loop through the array to fill the dp array
+        for (int i = 1; i < nums.length; i++) {
+            for (int j = 0; j < i; j++) {
+                // If nums[i] is greater than nums[j], check if we can extend the subsequence
+                if (nums[i] > nums[j]) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+            }
+        }
+
+        // The result will be the maximum value in dp array
+        int maxLength = 0;
+        for (int i = 0; i < dp.length; i++) {
+            maxLength = Math.max(maxLength, dp[i]);
+        }
+        
+        return maxLength;
+    }
+
+    public static void main(String[] args) {
+        int[] nums1 = {10, 9, 2, 5, 3, 7, 101, 18};
+        System.out.println("Length of longest increasing subsequence: " + lengthOfLIS(nums1));  // Output: 4
+
+        int[] nums2 = {0, 1, 0, 3, 2, 3};
+        System.out.println("Length of longest increasing subsequence: " + lengthOfLIS(nums2));  // Output: 4
+
+        int[] nums3 = {7, 7, 7, 7, 7, 7, 7};
+        System.out.println("Length of longest increasing subsequence: " + lengthOfLIS(nums3));  // Output: 1
+    }
+}
